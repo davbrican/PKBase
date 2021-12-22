@@ -1,0 +1,33 @@
+
+def leer_pagina():
+    con = sqlite3.connect(":memory:")
+    cur = con.cursor()
+
+    cur.execute('''
+    CREATE TABLE Pokemon (titulo TEXT, tituloOriginal TEXT, pais TEXT, estrenoEspanha TEXT, director TEXT, generos TEXT)
+    ''')
+
+    link = "https://www.elseptimoarte.net/estrenos"
+    
+    response = urllib2.urlopen(link)
+    soup = BeautifulSoup(response, 'lxml')
+    
+    #"https://www.elseptimoarte.net" + x.find("a")["href"] 
+    peliculas = ["https://www.elseptimoarte.net" + x.parent.find("a")["href"] for x in soup.find_all("p", "generos")]
+    
+    for i in peliculas:    
+        response2 = urllib2.urlopen(peliculas[1])
+        soup2 = BeautifulSoup(response2, 'lxml')
+        titulo = [x for x in soup2.find_all("dt") if x.string == "Título"][0].find_next_sibling("dd").string
+        tituloOriginal = [x for x in soup2.find_all("dt") if x.string == "Título original"][0].find_next_sibling("dd").string
+        pais = [x for x in soup2.find_all("dt") if x.string == "País"][0].find_next_sibling("dd").string
+        estrenoEspanha = [x for x in soup2.find_all("dt") if x.string == "Estreno en España"][0].find_next_sibling("dd").string
+        director = [x for x in soup2.find_all("dt") if x.string == "Director"][0].find_next_sibling("dd").string
+        generos = [x.string for x in soup2.find("p", ["categorias"]).find_all("a")]
+        strgenero =  ", ".join(generos)
+
+        cur.execute("INSERT INTO Peliculas (titulo, tituloOriginal, pais, estrenoEspanha, director, generos) VALUES (?,?,?,?,?,?)", (titulo, tituloOriginal, pais, estrenoEspanha, director, strgenero))
+
+    con.commit()
+    con.close()
+leer_pagina()
