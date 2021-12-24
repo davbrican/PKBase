@@ -1,5 +1,5 @@
 """
-WSGI config for EjercicioRSII project.
+WSGI config for PokeTeam project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

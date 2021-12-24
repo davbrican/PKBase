@@ -5,9 +5,14 @@ from models import *
 import json
 import os
 
+#TIPOS COMPLEMENTARIOS
+#https://pokemon.fandom.com/es/wiki/Tipos_elementales
+
+#IMAGENES
+#https://pokemondb.net/pokedex/darkrai
+#EJEMPLO:   https://pokemondb.net/pokedex/tapu-koko
 
 def leer_pagina():
-
     link = "https://www.pkparaiso.com/pokemon/lista-pokemon.php"
     
     response = urllib2.urlopen(link)
@@ -16,6 +21,7 @@ def leer_pagina():
     pokemons = soup.find("table", ["dex","sortable"]).find_all("tr")
 
     lista = []
+
     for i in range(1, len(pokemons)):
         data = pokemons[i].find_all("td")
 
@@ -23,20 +29,23 @@ def leer_pagina():
 
         json_pokemon = {
             "id": data[2].find("a").string.split(" ")[0],
-            "nombre": data[2].find("a").string.split(" ")[1],
+            "nombre": " ".join(data[2].find("a").string.split(" ")[1:]),
             "tipos": [j.split("/")[-1].split(".")[0] for j in [i["src"] for i in data[3].find_all("img")]],
-            "salud": int(data[-6].string),
-            "ataque": int(data[-5].string),
-            "defensa": int(data[-4].string),
+            "salud": int(data[-7].string),
+            "ataque": int(data[-6].string),
+            "defensa": int(data[-5].string),
+            "velocidad": int(data[-4].string),
             "ataque_especial": int(data[-3].string),
             "defensa_especial":  int(data[-2].string),
             "total": int(data[-1].string)
         }
 
-        new_pokemon = Pokemon(json_pokemon["id"], json_pokemon["nombre"], json_pokemon["tipos"], json_pokemon["salud"], json_pokemon["ataque"], json_pokemon["defensa"], json_pokemon["ataque_especial"], json_pokemon["defensa_especial"], json_pokemon["total"])
+        new_pokemon = Pokemon(json_pokemon["id"], json_pokemon["nombre"], json_pokemon["tipos"], json_pokemon["salud"], json_pokemon["ataque"], json_pokemon["defensa"], json_pokemon["velocidad"], json_pokemon["ataque_especial"], json_pokemon["defensa_especial"], json_pokemon["total"])
+        '''
         print("\n-------------------- " + json_pokemon["id"] + " --------------------")
         print(url)
         print(new_pokemon)
+        '''
         lista.append(json_pokemon)
         
     with open(os.path.dirname(__file__) + "/pokemons.json", "w", encoding="UTF-8") as file:
@@ -50,7 +59,7 @@ def extraer_datos():
         
     lista = []
     for i in lista_pokemons:
-        new_pokemon = Pokemon(i["id"], i["nombre"], i["tipos"], i["salud"], i["ataque"], i["defensa"], i["ataque_especial"], i["defensa_especial"], i["total"])
+        new_pokemon = Pokemon(i["id"], i["nombre"], i["tipos"], i["salud"], i["ataque"], i["defensa"], i["velocidad"], i["ataque_especial"], i["defensa_especial"], i["total"])
         lista.append(new_pokemon)
 
     return lista
