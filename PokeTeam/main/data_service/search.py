@@ -43,7 +43,7 @@ def buscar_pokemon_nombre(entrance):
 
 
 
-def busar_pokemon_stats(entrance):
+def buscar_pokemon_stats(entrance):
     ix=open_dir("Index")
     
     busqueda = "[ 150 TO 255 ]"
@@ -90,46 +90,27 @@ def buscar_pokemon_tipo(entrance):
 
 
 def buscar_stats_por_tipo(stats, tipo):
+    pokemon_list = buscar_pokemon_stats(stats)
+    if stats == "Daño":
+        pokemon_list.sort(key=lambda x: (x.ataque, x.ataque_especial), reverse=True)
+    elif stats == "Vida":
+        pokemon_list.sort(key=lambda x: x.salud, reverse=True)
+    elif stats == "Velocidad":
+        pokemon_list.sort(key=lambda x: x.velocidad, reverse=True)
+    elif stats == "Defensa":
+        pokemon_list.sort(key=lambda x: (x.defensa, x.defensa_especial), reverse=True)
+
+
     tipos_ls = buscar_pokemon_tipo(tipo)
     tipos_names = [i.nombre for i in tipos_ls]
-    ix=open_dir("Index")
     
-    busqueda = "[ 1 TO 255 ]"
-
-    with ix.searcher() as searcher:
-        if stats == "Daño":
-            query = MultifieldParser(["ataque","ataque_especial"], ix.schema, group=OrGroup).parse(busqueda)
-        elif stats == "Vida":
-            query = QueryParser("salud", ix.schema).parse(busqueda)
-        elif stats == "Velocidad":
-            query = QueryParser("velocidad", ix.schema).parse(busqueda)
-        elif stats == "Defensa":
-            query = MultifieldParser(["defensa","defensa_especial"], ix.schema, group=OrGroup).parse(busqueda)
-        else:
-            query = MultifieldParser(["salud","velocidad","defensa","defensa_especial","ataque","ataque_especial"], ix.schema, group=OrGroup).parse(busqueda)
-            
-        results = searcher.search(query,limit=802)
-
-        pokemon_list = []
-        for res in results:
-            pokemon_list.append(Pokemon(res["id"], res["nombre"], res["tipos"], res["salud"], res["ataque"], res["defensa"], res["velocidad"], res["ataque_especial"], res["defensa_especial"], res["total"]))
-    
-        if stats == "Daño":
-            pokemon_list.sort(key=lambda x: (x.ataque, x.ataque_especial), reverse=True)
-        elif stats == "Vida":
-            pokemon_list.sort(key=lambda x: x.salud, reverse=True)
-        elif stats == "Velocidad":
-            pokemon_list.sort(key=lambda x: x.velocidad, reverse=True)
-        elif stats == "Defensa":
-            pokemon_list.sort(key=lambda x: (x.defensa, x.defensa_especial), reverse=True)
+    for res in pokemon_list:
+        if res.nombre in tipos_names:
+            return res
         
-        
-        for res in pokemon_list:
-            if res.nombre in tipos_names:
-                return res
-            
-        return pokemon_list[0]
-    
+    return pokemon_list[0]
+
+
 def buscar_por_id(entrance):
     ix=open_dir("Index")
     
@@ -248,4 +229,3 @@ def crear_equipo():
 
 
     return [pokemon_fav, pokemon_1, pokemon_2, pokemon_3, pokemon_4, pokemon_5]
-
