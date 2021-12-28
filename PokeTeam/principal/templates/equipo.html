@@ -1,0 +1,72 @@
+
+
+{% extends 'base.html' %}
+
+{% block encabezado %}
+<h1>Creador de equipos Pokemon</h1>
+{% endblock %}
+
+
+{% block contenido %}
+<pre>
+Buenas, este es un creador de equipos pokemon personalizados. En base a tu pokemon favorito
+y 2 estadísticas base de otros dos pokemon, genera un equipo lo más competitivo posible
+para que así nadie te gane en PokeMMO!
+</pre>
+<form action="/equipo/" method="post">{% csrf_token %}
+    <label for="Pokemon favorito">Pokemon favorito</label>
+    <br>
+    <input id="Pokemon favorito" type="text" name="pokemon_favorito" value="{{ pokemon_nombre }}">
+    <br><br>
+    <label for="Stats Pokemon 1">Stats Pokemon 1</label> 
+    <br>
+    <select id="Stats Pokemon 1" name="stats_pk_1">
+    {% for stat in lista_stats %}
+    <option value="{{stat}}">{{stat}}</option>
+    {% endfor %}
+    </select>
+    <br>
+    <br>
+    <label for="Tipo Pokemon 1">Tipo Pokemon 1</label>
+    <br>
+    <select id="Tipos Pokemon 1" name="tipo_pk_1">
+    {% for tipo in lista_tipos %}
+    <option value="{{tipo}}">{{tipo}}</option>
+    {% endfor %}
+    </select>
+    <br>
+    <br>
+    <label for="Stats Pokemon 2">Stats Pokemon 2</label>
+    <br>
+    <select id="Stats Pokemon 2" name="stats_pk_2">
+    {% for stat in lista_stats %}
+    <option value="{{stat}}">{{stat}}</option>
+    {% endfor %}
+    </select>
+    <br>
+    <br>
+    <label for="Tipo Pokemon 2">Tipo Pokemon 2</label>
+    <br>
+    <select id="Tipos Pokemon 2" name="tipo_pk_2">
+    {% for tipo in lista_tipos %}
+    <option value="{{tipo}}">{{tipo}}</option>
+    {% endfor %}
+    </select>
+    <br><br>
+    <input type="submit" value="Calcular">
+</form>
+
+<h1>Equipo completo</h1>
+
+<pre>
+Según nuestros calculos, este es el mejor equipo que puedes usar en base a tus preferencias:
+</pre>
+<table id="lista_pokemon">
+    {% for pok in equipo %}
+    <tr>
+        <td><a href="/pokemons/pokemon/{{pok.id}}"><img src="{{pok.foto_url}}" width="260" height="240"></a></td>
+        <td>{{pok.nombre}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

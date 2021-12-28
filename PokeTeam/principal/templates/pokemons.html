@@ -1,0 +1,26 @@
+
+
+{% extends 'base.html' %}
+
+
+
+{% block encabezado %}
+<h1> Lista de Pokemon </h1>
+{% endblock %}
+
+{% block contenido %}
+	<p>Actualmente tenemos almacenados <strong>{{pokemons|length}}</strong> pokemon: </p>
+	
+	<table id="lista_pokemon">
+		<tr>
+			<th>ID</th>
+			<th>Nombre</th>
+		</tr>
+		{% for pok in pokemons %}
+		<tr>
+			<td><a href="pokemon/{{pok.id}}">#{{pok.id}}</a></td>
+			<td>{{pok.nombre}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

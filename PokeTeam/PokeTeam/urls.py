@@ -1,15 +1,13 @@
-#encoding:utf-8
 
-from django.urls import path
 from django.contrib import admin
-from main import views
+from django.urls import path
+from principal import views
 
-urlpatterns = [
-    path('', views.index),
-    path('populate/', views.populateDB),
-    path('loadRS', views.loadRS),
-    path('mostListenedArtists', views.mostListenedArtists),
-    path('mostFrequentTags', views.mostFrequentTags),
-    path('recommendedArtists', views.recommendedArtists),
-    path('admin', admin.site.urls),
+urlpatterns = [  
+    path('', views.inicio),
+    path('cargar/', views.cargar),
+    path('pokemons/', views.lista_pokemons),
+    path('pokemons/pokemon/<str:pokemon_id>', views.detalle_pokemon),
+    path('admin/', admin.site.urls),
+    path('equipo/', views.equipo),
 ]

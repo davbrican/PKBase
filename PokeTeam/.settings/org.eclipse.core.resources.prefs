@@ -1,3 +1,4 @@
 eclipse.preferences.version=1
-encoding//PokeTeam/urls.py=utf-8
-encoding//main/forms.py=utf-8
+encoding//principal/models.py=utf-8
+encoding//principal/populateDB.py=utf-8
+encoding//principal/views.py=utf-8
