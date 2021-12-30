@@ -1,0 +1,75 @@
+
+
+{% extends 'base.html' %}
+
+{% block encabezado %}
+<h1>Recomendador de equipos Pokemon</h1>
+{% endblock %}
+
+
+{% block contenido %}
+<form action="/recomendacion_items/" method="post">{% csrf_token %}
+    <label for="entrada">Nombre del Pokemon</label>
+    <br>
+    <input id="entrada" type="text" name="entrada" value="{{ entrada }}">
+    
+    <br><br>
+    <input type="submit" value="Calcular">
+</form>
+
+<h1>Pokemon recomendado</h1>
+<img src="{{foto.url}}" width="260" height="240">
+    <dd>
+        <p><strong>Salud: </strong>
+            {{pokemon.salud}}
+            <meter min="1" max="255"
+             low="50" high="130"
+             optimum="200" value="{{pokemon.salud}}"></p>
+    </dd>
+    <p></p>
+    <dd>
+        <p><strong>Ataque: </strong>
+        {{pokemon.ataque}}
+        <meter min="1" max="255"
+         low="50" high="130"
+         optimum="200" value="{{pokemon.ataque}}">
+        </p>
+    </dd>
+    <dd>
+        <p><strong>Defensa: </strong>
+        {{pokemon.defensa}}
+        <meter min="1" max="255"
+         low="50" high="130"
+         optimum="200" value="{{pokemon.defensa}}">
+        </p>
+    </dd>
+    <dd>
+        <p><strong>Ataque Especial: </strong>
+        {{pokemon.ataque_especial}}
+        <meter min="1" max="255"
+         low="50" high="130"
+         optimum="200" value="{{pokemon.ataque_especial}}">
+        </p>
+    </dd>
+    <dd>
+        <p><strong>Defensa Especial: </strong>
+            {{pokemon.defensa_especial}}
+        <meter min="1" max="255"
+         low="50" high="130"
+         optimum="200" value="{{pokemon.defensa_especial}}">
+        </p>
+    </dd>
+    <dd>
+        <p><strong>Velocidad: </strong>
+        {{pokemon.velocidad}}
+        <meter min="1" max="255"
+         low="50" high="130"
+         optimum="200" value="{{pokemon.velocidad}}">
+        </p>
+    </dd>
+    <p></p>
+    <dd>
+    	<h3 style="margin-top: -5px;">Total</h3>
+    	<p style="margin-top: -20px;">{{pokemon.total}}</p>
+    </dd>   
+{% endblock %}

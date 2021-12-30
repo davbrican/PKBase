@@ -1,0 +1,30 @@
+
+
+{% extends 'base.html' %}
+
+{% block encabezado %}
+<h1>Recomendador de equipos Pokemon</h1>
+{% endblock %}
+
+
+{% block contenido %}
+<form action="/recomendacion_usuarios/" method="post">{% csrf_token %}
+    <label for="entrada">ID de usuario (0 - 9999)</label>
+    <br>
+    <input id="entrada" type="text" name="entrada" value="{{ entrada }}">
+    
+    <br><br>
+    <input type="submit" value="Calcular">
+</form>
+
+<h1>Equipo recomendado</h1>
+
+<table id="lista_pokemon">
+    {% for pok in equipo %}
+    <tr>
+        <td><a href="/pokemons/pokemon/{{pok.id}}"><img src="{{pok.foto_url}}" width="260" height="240"></a></td>
+        <td>{{pok.nombre}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -10,4 +10,6 @@ urlpatterns = [
     path('pokemons/pokemon/<str:pokemon_id>', views.detalle_pokemon),
     path('admin/', admin.site.urls),
     path('equipo/', views.equipo),
+    path('recomendacion_usuarios/', views.recomendacion_colaborativa_usuarios),
+    path('recomendacion_items/', views.recomendacion_colaborativa_items),
 ]

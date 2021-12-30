@@ -5,8 +5,9 @@ from django.db.models import Max
 from principal.models import Pokemon, Poke_photo
 from principal.collect import *
 from principal.search import *
-from principal.forms import equipo_form
+from principal.forms import equipo_form, recomendacion
 from django.http import HttpResponseRedirect
+from principal.recomendaciones import *
 
 #LOAD
 def cargar(request):    
@@ -21,6 +22,7 @@ def inicio(request):
 
 #muestra la lista de todos los pokemon
 def lista_pokemons(request):
+    print(recomendacion_colaborativa_basado_en_items("Pikachu"))
     pokemons=extraer_datos()[0]
     for i in pokemons:
         i.id = i.id[1:]
@@ -33,11 +35,6 @@ def detalle_pokemon(request, pokemon_id):
     return render(request,'pokemon.html',{'pokemon':pokemon, "foto": foto})
 
 #muestra un formulario para crear un equipo pokemon muy competitivo
-def equipo(request):
-    return render(request,'equipo.html')
-
-
-
 def equipo(request):
     lista_tipos = "Acero/Agua/Bicho/Dragón/Electrico/Fantasma/Fuego/Hada/Hielo/Lucha/Normal/Planta/Psiquico/Roca/Siniestro/Tierra/Veneno/Volador".lower().split("/")
     lista_stats = ["Daño", "Vida", "Velocidad", "Defensa"]
@@ -62,3 +59,45 @@ def equipo(request):
         form = equipo_form()
 
     return render(request, 'equipo.html', {'form': form, "equipo": [], "lista_stats": lista_stats,  "lista_tipos": lista_tipos})
+    
+#muestra un formulario para crear un equipo pokemon muy competitivo
+def recomendacion_colaborativa_usuarios(request):
+    if request.method == 'POST':
+        form = recomendacion(request.POST)
+        if form.is_valid(): 
+            entrada = form.cleaned_data['entrada']
+            
+            equipo = recomendacion_colaborativa_basado_en_usuarios(entrada)
+            equipo_2_send = []
+            for i in range(1, len(equipo)):
+                pokemon = buscar_por_id(equipo[i])
+                pokemon.foto_url = buscar_foto_pokemon_id(pokemon.id).url
+                equipo_2_send.append(pokemon)
+            
+
+            return render(request, 'recomendacion_usuarios.html', {"equipo": equipo_2_send})
+
+    else:
+        form = recomendacion()
+
+    return render(request, 'recomendacion_usuarios.html', {'form': form, "equipo": []})
+     
+#muestra un formulario para crear un equipo pokemon muy competitivo
+def recomendacion_colaborativa_items(request):
+    if request.method == 'POST':
+        form = recomendacion(request.POST)
+        if form.is_valid(): 
+            entrada = form.cleaned_data['entrada']
+            
+            resultado = recomendacion_colaborativa_basado_en_items(entrada)
+            pokemon = buscar_por_id(resultado)
+            foto = buscar_foto_pokemon_id(pokemon.id)
+            
+
+            return render(request, 'recomendacion_items.html', {"pokemon": pokemon, "foto": foto})
+
+    else:
+        form = recomendacion()
+
+    return render(request, 'recomendacion_items.html', {'form': form, "pokemon": []})
+    

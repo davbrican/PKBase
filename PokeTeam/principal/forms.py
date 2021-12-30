@@ -6,3 +6,6 @@ class equipo_form(forms.Form):
     tipo_pk_1 = forms.CharField(label='Tipo Pokemon 1', max_length=100)
     stats_pk_2 = forms.CharField(label='Stats Pokemon 2', max_length=100)
     tipo_pk_2 = forms.CharField(label='Tipo Pokemon 1', max_length=100)
+
+class recomendacion(forms.Form):
+    entrada = forms.CharField(label='Entrada', max_length=100)
