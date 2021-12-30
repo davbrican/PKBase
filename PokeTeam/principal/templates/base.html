@@ -8,21 +8,24 @@
    {% block style_css %}{% endblock %}
   </style>
   <link rel="stylesheet" href="{% static 'styles/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'styles/menu.css' %}" />
 </head>
 <body>
   <header> 
   	{% block encabezado %}{% endblock %}
-  	<nav>
-  		<dl>
-			<dd><a href='/'>Inicio</h3></dd>
-			<dd><a href='/equipo'>Mi mejor equipo Pokemon</a></dd>
-			<dd><a href='/pokemons'>Lista de Pokemon</a></dd>
-			<dd><a href='/recomendacion_items'>Recomendacion de Pokemon</a></dd>
-			<dd><a href='/recomendacion_usuarios'>Recomendacion basada en usuario</a></dd>
-			<dd><a href='/cargar'>Cargar.  <strong>AVISO: Se borrar&aacute;n todos los datos</strong></a></dd>
-		</dl>
-	</nav>
   </header>
+  <aside class="sidebar">
+    <nav class="nav">
+      <ul>
+        <li><a class= {{active.Inicio}} href='/'>Inicio</h3></li>
+        <li><a class= {{active.Equipo}} href='/equipo'>Mi mejor equipo Pokemon</a></li>
+        <li><a class= {{active.Lista}} href='/pokemons'>Lista de Pokemon</a></li>
+        <li><a class= {{active.Items}} href='/recomendacion_items'>Recomendacion de Pokemon</a></li>
+        <li><a class= {{active.Usuarios}} href='/recomendacion_usuarios'>Recomendacion basada en usuario</a></li>
+        <li><a class= {{active.Cargar}} href='/cargar'>Cargar.  <strong>AVISO: Se borrar&aacute;n todos los datos</strong></a></li>
+      </ul>
+    </nav>
+  </aside>
   <section>
     {% block contenido %}{% endblock %}
   </section>

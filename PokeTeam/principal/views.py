@@ -9,16 +9,32 @@ from principal.forms import equipo_form, recomendacion
 from django.http import HttpResponseRedirect
 from principal.recomendaciones import *
 
+
+def activeMenu():
+    active = {
+        "Inicio": "notActive",
+        "Equipo": "notActive",
+        "Lista": "notActive",
+        "Items": "notActive",
+        "Usuarios": "notActive",
+        "Cargar": "notActive",
+    }
+    return active
+
 #LOAD
 def cargar(request):    
     leer_pagina()
     almacenar_datos()
+    active = activeMenu()
+    active.Cargar = "active"
     html="<html><body>Datos cargados correctamente</body></htm>"
     return HttpResponse(html)
 
 #muestra la pagina de inicio
 def inicio(request):
-    return render(request,'inicio.html')
+    active = activeMenu()
+    active["Inicio"] = "active"
+    return render(request,'inicio.html', {"active": active})
 
 #muestra la lista de todos los pokemon
 def lista_pokemons(request):
@@ -26,16 +42,22 @@ def lista_pokemons(request):
     pokemons=extraer_datos()[0]
     for i in pokemons:
         i.id = i.id[1:]
-    return render(request,'pokemons.html', {'pokemons':pokemons})
+    active = activeMenu()
+    active["Lista"] = "active"
+    return render(request,'pokemons.html', {'pokemons':pokemons, "active": active})
 
 #muestra detalles de un pokemon
 def detalle_pokemon(request, pokemon_id):
     pokemon = buscar_por_id("#"+pokemon_id)
     foto = buscar_foto_pokemon_id("#"+pokemon_id)
-    return render(request,'pokemon.html',{'pokemon':pokemon, "foto": foto})
+    active = activeMenu()
+    active["Pokemon"] = "active"
+    return render(request,'pokemon.html',{'pokemon':pokemon, "foto": foto, "active": active})
 
 #muestra un formulario para crear un equipo pokemon muy competitivo
 def equipo(request):
+    active = activeMenu()
+    active["Equipo"] = "active"
     lista_tipos = "Acero/Agua/Bicho/Dragón/Electrico/Fantasma/Fuego/Hada/Hielo/Lucha/Normal/Planta/Psiquico/Roca/Siniestro/Tierra/Veneno/Volador".lower().split("/")
     lista_stats = ["Daño", "Vida", "Velocidad", "Defensa"]
     if request.method == 'POST':
@@ -53,15 +75,17 @@ def equipo(request):
                 i.foto_url = buscar_foto_pokemon_id("#"+i.id).url
             
 
-            return render(request, 'equipo.html', {"equipo": equipo, "lista_stats": lista_stats,  "lista_tipos": lista_tipos})
+            return render(request, 'equipo.html', {"equipo": equipo, "lista_stats": lista_stats,  "lista_tipos": lista_tipos, "active": active})
 
     else:
         form = equipo_form()
 
-    return render(request, 'equipo.html', {'form': form, "equipo": [], "lista_stats": lista_stats,  "lista_tipos": lista_tipos})
+    return render(request, 'equipo.html', {'form': form, "equipo": [], "lista_stats": lista_stats,  "lista_tipos": lista_tipos, "active": active})
     
 #muestra un formulario para crear un equipo pokemon muy competitivo
 def recomendacion_colaborativa_usuarios(request):
+    active = activeMenu()
+    active["Usuarios"] = "active"
     if request.method == 'POST':
         form = recomendacion(request.POST)
         if form.is_valid(): 
@@ -75,15 +99,17 @@ def recomendacion_colaborativa_usuarios(request):
                 equipo_2_send.append(pokemon)
             
 
-            return render(request, 'recomendacion_usuarios.html', {"equipo": equipo_2_send})
+            return render(request, 'recomendacion_usuarios.html', {"equipo": equipo_2_send, "active": active})
 
     else:
         form = recomendacion()
 
-    return render(request, 'recomendacion_usuarios.html', {'form': form, "equipo": []})
+    return render(request, 'recomendacion_usuarios.html', {'form': form, "equipo": [], "active": active})
      
 #muestra un formulario para crear un equipo pokemon muy competitivo
 def recomendacion_colaborativa_items(request):
+    active = activeMenu()
+    active["Items"] = "active"
     if request.method == 'POST':
         form = recomendacion(request.POST)
         if form.is_valid(): 
@@ -94,10 +120,10 @@ def recomendacion_colaborativa_items(request):
             foto = buscar_foto_pokemon_id(pokemon.id)
             
 
-            return render(request, 'recomendacion_items.html', {"pokemon": pokemon, "foto": foto})
+            return render(request, 'recomendacion_items.html', {"pokemon": pokemon, "foto": foto, "active": active})
 
     else:
         form = recomendacion()
 
-    return render(request, 'recomendacion_items.html', {'form': form, "pokemon": []})
+    return render(request, 'recomendacion_items.html', {'form': form, "pokemon": [], "active": active})
     

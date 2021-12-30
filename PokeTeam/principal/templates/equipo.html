@@ -3,11 +3,12 @@
 {% extends 'base.html' %}
 
 {% block encabezado %}
-<h1>Creador de equipos Pokemon</h1>
+<div class="titulo"><h1>Creador de equipos Pokemon</h1></div>
 {% endblock %}
 
 
 {% block contenido %}
+<div class="cuerpo_completo">
 <pre>
 Buenas, este es un creador de equipos pokemon personalizados. En base a tu pokemon favorito
 y 2 estadísticas base de otros dos pokemon, genera un equipo lo más competitivo posible
@@ -69,4 +70,5 @@ Según nuestros calculos, este es el mejor equipo que puedes usar en base a tus 
     </tr>
     {% endfor %}
 </table>
+</div>
 {% endblock %}

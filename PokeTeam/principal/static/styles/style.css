@@ -38,3 +38,11 @@ input[type=text] {
 input[type=text]:focus {
     background-color: lightblue;
 }
+
+.cuerpo_completo {
+    margin-left:25%;
+    padding:1px 16px;
+    height:1000px;
+    top: 100px;
+    position: relative;
+}

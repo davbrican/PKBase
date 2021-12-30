@@ -5,10 +5,11 @@
 
 
 {% block encabezado %}
-<h1> Lista de Pokemon </h1>
+<div class="titulo"><h1> Lista de Pokemon </h1></div>
 {% endblock %}
 
 {% block contenido %}
+<div class="cuerpo_completo">
 	<p>Actualmente tenemos almacenados <strong>{{pokemons|length}}</strong> pokemon: </p>
 	
 	<table id="lista_pokemon">
@@ -23,4 +24,5 @@
 		</tr>
 		{% endfor %}
 	</table>
+</div>
 {% endblock %}

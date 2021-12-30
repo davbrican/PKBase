@@ -3,11 +3,12 @@
 {% extends 'base.html' %}
 
 {% block encabezado %}
-<h1>Recomendador de equipos Pokemon</h1>
+<div class="titulo"><h1>Recomendador de equipos Pokemon</h1></div>
 {% endblock %}
 
 
 {% block contenido %}
+<div class="cuerpo_completo">
 <form action="/recomendacion_usuarios/" method="post">{% csrf_token %}
     <label for="entrada">ID de usuario (0 - 9999)</label>
     <br>
@@ -27,4 +28,5 @@
     </tr>
     {% endfor %}
 </table>
+</div>
 {% endblock %}

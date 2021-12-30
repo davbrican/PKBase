@@ -3,11 +3,12 @@
 {% extends 'base.html' %}
 
 {% block encabezado %}
-<h1>Recomendador de equipos Pokemon</h1>
+<div class="titulo"><h1>Recomendador de equipos Pokemon</h1></div>
 {% endblock %}
 
 
 {% block contenido %}
+<div class="cuerpo_completo">
 <form action="/recomendacion_items/" method="post">{% csrf_token %}
     <label for="entrada">Nombre del Pokemon</label>
     <br>
@@ -72,4 +73,5 @@
     	<h3 style="margin-top: -5px;">Total</h3>
     	<p style="margin-top: -20px;">{{pokemon.total}}</p>
     </dd>   
+</div>
 {% endblock %}
