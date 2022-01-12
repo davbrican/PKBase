@@ -5,8 +5,14 @@
 {% endblock %}
 
 {% block contenido %}
-<div style="margin-left:300px;padding:1px 16px;height:1000px;top:80px;position:fixed">
+<div style="margin-left:25%;padding:1px 16px;height:1000px;top:80px;position:fixed">
     <img src="{{foto.url}}" width="260" height="240">
+    
+    <dd style="margin-top: -10px">
+        <p><strong>Tipos: </strong>
+            {{pokemon.tipos}}
+        </p>
+    </dd>
     <dd>
         <p><strong>Salud: </strong>
             {{pokemon.salud}}
@@ -15,7 +21,7 @@
              optimum="200" value="{{pokemon.salud}}"></p>
     </dd>
     <p></p>
-    <dd>
+    <dd style="margin-top: -5px">
         <p><strong>Ataque: </strong>
         {{pokemon.ataque}}
         <meter min="1" max="255"
@@ -23,7 +29,7 @@
          optimum="200" value="{{pokemon.ataque}}">
         </p>
     </dd>
-    <dd>
+    <dd style="margin-top: -5px">
         <p><strong>Defensa: </strong>
         {{pokemon.defensa}}
         <meter min="1" max="255"
@@ -31,7 +37,7 @@
          optimum="200" value="{{pokemon.defensa}}">
         </p>
     </dd>
-    <dd>
+    <dd style="margin-top: -5px">
         <p><strong>Ataque Especial: </strong>
         {{pokemon.ataque_especial}}
         <meter min="1" max="255"
@@ -39,7 +45,7 @@
          optimum="200" value="{{pokemon.ataque_especial}}">
         </p>
     </dd>
-    <dd>
+    <dd style="margin-top: -5px">
         <p><strong>Defensa Especial: </strong>
             {{pokemon.defensa_especial}}
         <meter min="1" max="255"
@@ -47,7 +53,7 @@
          optimum="200" value="{{pokemon.defensa_especial}}">
         </p>
     </dd>
-    <dd>
+    <dd style="margin-top: -5px">
         <p><strong>Velocidad: </strong>
         {{pokemon.velocidad}}
         <meter min="1" max="255"
@@ -55,7 +61,6 @@
          optimum="200" value="{{pokemon.velocidad}}">
         </p>
     </dd>
-    <p></p>
     <dd>
     	<h3 style="margin-top: -5px;">Total</h3>
     	<p style="margin-top: -20px;">{{pokemon.total}}</p>

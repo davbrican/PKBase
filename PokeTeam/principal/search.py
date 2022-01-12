@@ -100,8 +100,8 @@ def buscar_pokemon_tipo(entrance):
         return pokemon_list
 
 
-def buscar_stats_por_tipo(stats, tipo):
-    pokemon_list = buscar_pokemon_stats(stats)
+def buscar_stats_por_tipo(stats, tipo):   
+    pokemon_list = buscar_pokemon_tipo(tipo)
     if stats == "Daño":
         pokemon_list.sort(key=lambda x: (x.ataque, x.ataque_especial), reverse=True)
     elif stats == "Vida":
@@ -111,9 +111,7 @@ def buscar_stats_por_tipo(stats, tipo):
     elif stats == "Defensa":
         pokemon_list.sort(key=lambda x: (x.defensa, x.defensa_especial), reverse=True)
 
-
-    tipos_ls = buscar_pokemon_tipo(tipo)
-    tipos_names = [i.nombre for i in tipos_ls]
+    tipos_names = [i.nombre for i in pokemon_list]
     
     lista_legendarios = extraer_datos()[2]
     
@@ -240,6 +238,5 @@ def crear_equipo(pokemon_favorito,stat_pk_1,tipo_pk_1,stat_pk_2,tipo_pk_2):
                     break
     
     pokemon_5 = buscar_stats_por_tipo(stat_pk_5, tipo_pk_5)
-
 
     return [pokemon_fav, pokemon_1, pokemon_2, pokemon_3, pokemon_4, pokemon_5]

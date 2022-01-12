@@ -9,3 +9,6 @@ class equipo_form(forms.Form):
 
 class recomendacion(forms.Form):
     entrada = forms.CharField(label='Entrada', max_length=100)
+    
+class busqueda_estandard(forms.Form):
+    palabra = forms.CharField(label="Palabra", max_length=100)

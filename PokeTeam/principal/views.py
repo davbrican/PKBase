@@ -5,7 +5,7 @@ from django.db.models import Max
 from principal.models import Pokemon, Poke_photo
 from principal.collect import *
 from principal.search import *
-from principal.forms import equipo_form, recomendacion
+from principal.forms import equipo_form, recomendacion, busqueda_estandard
 from django.http import HttpResponseRedirect
 from principal.recomendaciones import *
 
@@ -38,13 +38,20 @@ def inicio(request):
 
 #muestra la lista de todos los pokemon
 def lista_pokemons(request):
-    print(recomendacion_colaborativa_basado_en_items("Pikachu"))
+    #TODO HACER UN FILTRO POR TIPO Y OTRO POR STATS USANDO LA BUSQUEDA DE WHOOSH (ORDENAR LISTA)
     pokemons=extraer_datos()[0]
     for i in pokemons:
         i.id = i.id[1:]
     active = activeMenu()
     active["Lista"] = "active"
-    return render(request,'pokemons.html', {'pokemons':pokemons, "active": active})
+    if request.method == "POST":
+        form = busqueda_estandard(request.POST)
+        if form.is_valid():
+            pokemon = buscar_pokemon_nombre(form.cleaned_data['palabra'])
+            return render(request,'pokemons.html', {'pokemons':[pokemon], "active": active})
+    else:
+        return render(request,'pokemons.html', {'pokemons':pokemons, "active": active})
+        
 
 #muestra detalles de un pokemon
 def detalle_pokemon(request, pokemon_id):

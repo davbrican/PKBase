@@ -9,6 +9,7 @@ ul {
   height: 100%;
   overflow: auto;
   top: 80px;
+  left: -10px;
 }
 
 li a {

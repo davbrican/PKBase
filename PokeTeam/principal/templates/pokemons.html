@@ -10,6 +10,16 @@
 
 {% block contenido %}
 <div class="cuerpo_completo">
+	
+	<form action="/pokemons/" method="post">{% csrf_token %}
+		<label for="palabra">Buscar Pokemon</label>
+		<br>
+		<input id="palabra" type="text" name="palabra" value="{{ palabra }}">
+		
+		<br><br>
+		<input type="submit" value="Buscar">
+	</form>
+
 	<p>Actualmente tenemos almacenados <strong>{{pokemons|length}}</strong> pokemon: </p>
 	
 	<table id="lista_pokemon">
