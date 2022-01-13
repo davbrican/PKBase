@@ -136,7 +136,7 @@ def recomendacion_colaborativa_items(request):
         if form.is_valid(): 
             entrada = form.cleaned_data['entrada']
             
-            resultado = recomendacion_colaborativa_basado_en_items(entrada)
+            resultado = recomendacion_colaborativa_basado_en_items(buscar_pokemon_nombre(entrada)[0])
             pokemon = buscar_por_id(resultado)
             foto = buscar_foto_pokemon_id(pokemon.id)
             

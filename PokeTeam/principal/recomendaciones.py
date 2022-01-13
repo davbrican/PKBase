@@ -29,7 +29,7 @@ def get_equipos():
 def recomendacion_colaborativa_basado_en_items(pokemon):
     equipos, recomendacion = get_equipos()[0], get_equipos()[1]
     for i in equipos:
-        if i[1] == pokemon or i[2] == pokemon or i[3] == pokemon or i[4] == pokemon or i[5] == pokemon or i[6] == pokemon:
+        if i[1] == pokemon.id or i[2] == pokemon.id or i[3] == pokemon.id or i[4] == pokemon.id or i[5] == pokemon.id or i[6] == pokemon.id:
             recomendacion[i[1]] += 1
             recomendacion[i[2]] += 1
             recomendacion[i[3]] += 1
