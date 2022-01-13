@@ -5,7 +5,7 @@ from django.db.models import Max
 from principal.models import Pokemon, Poke_photo
 from principal.collect import *
 from principal.search import *
-from principal.forms import equipo_form, recomendacion, busqueda_estandard
+from principal.forms import equipo_form, recomendacion, busqueda_estandard, filtrado
 from django.http import HttpResponseRedirect
 from principal.recomendaciones import *
 
@@ -38,21 +38,35 @@ def inicio(request):
 
 #muestra la lista de todos los pokemon
 def lista_pokemons(request):
-    #TODO HACER UN FILTRO POR TIPO Y OTRO POR STATS USANDO LA BUSQUEDA DE WHOOSH (ORDENAR LISTA)
     pokemons=extraer_datos()[0]
     for i in pokemons:
         i.id = i.id[1:]
     active = activeMenu()
     active["Lista"] = "active"
+    lista_tipos = "Todos/Acero/Agua/Bicho/Dragon/Electrico/Fantasma/Fuego/Hada/Hielo/Lucha/Normal/Planta/Psiquico/Roca/Siniestro/Tierra/Veneno/Volador".lower().split("/")
     if request.method == "POST":
         form = busqueda_estandard(request.POST)
         if form.is_valid():
-            pokemon = buscar_pokemon_nombre(form.cleaned_data['palabra'])
-            return render(request,'pokemons.html', {'pokemons':[pokemon], "active": active})
+            pokemons = buscar_pokemon_nombre(form.cleaned_data['palabra'])
+            for i in pokemons:
+                i.id = i.id[1:]
+            return render(request,'pokemons.html', {'pokemons':pokemons, "active": active, "lista_tipos": lista_tipos})
+        else:
+            form = filtrado(request.POST)
+            if form.is_valid():
+                if form.cleaned_data['tipo_pkm'] != "todos":
+                    pokemons = buscar_pokemon_tipo(form.cleaned_data['tipo_pkm'])
+                else:
+                    pokemons = extraer_datos()[0]
+                    
+                for i in pokemons:
+                    i.id = i.id[1:]
+                return render(request,'pokemons.html', {'pokemons':pokemons, "active": active, "lista_tipos": lista_tipos})
+                    
+            
     else:
-        return render(request,'pokemons.html', {'pokemons':pokemons, "active": active})
+        return render(request,'pokemons.html', {'pokemons':pokemons, "active": active, "lista_tipos": lista_tipos})
         
-
 #muestra detalles de un pokemon
 def detalle_pokemon(request, pokemon_id):
     pokemon = buscar_por_id("#"+pokemon_id)
@@ -65,7 +79,7 @@ def detalle_pokemon(request, pokemon_id):
 def equipo(request):
     active = activeMenu()
     active["Equipo"] = "active"
-    lista_tipos = "Acero/Agua/Bicho/Dragón/Electrico/Fantasma/Fuego/Hada/Hielo/Lucha/Normal/Planta/Psiquico/Roca/Siniestro/Tierra/Veneno/Volador".lower().split("/")
+    lista_tipos = "Acero/Agua/Bicho/Dragon/Electrico/Fantasma/Fuego/Hada/Hielo/Lucha/Normal/Planta/Psiquico/Roca/Siniestro/Tierra/Veneno/Volador".lower().split("/")
     lista_stats = ["Daño", "Vida", "Velocidad", "Defensa"]
     if request.method == 'POST':
         form = equipo_form(request.POST)
@@ -133,4 +147,3 @@ def recomendacion_colaborativa_items(request):
         form = recomendacion()
 
     return render(request, 'recomendacion_items.html', {'form': form, "pokemon": [], "active": active})
-    

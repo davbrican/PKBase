@@ -32,15 +32,17 @@ def buscar_pokemon_nombre(entrance):
     ix=open_dir("Index")
 
     with ix.searcher() as searcher:
-        query = QueryParser("nombre", ix.schema).parse(entrance)#MultifieldParser(["nombre","bodega"], ix.schema, group=OrGroup).parse(str(input()))
+        query = QueryParser("nombre", ix.schema).parse("*{entrada}*".format(entrada=entrance))
 
         results = searcher.search(query)
-
-        pokemon = None
+        
+        pokemons = []
         for res in results:
             pokemon = Pokemon(res["id"], res["nombre"], res["tipos"], res["salud"], res["ataque"], res["defensa"], res["velocidad"], res["ataque_especial"], res["defensa_especial"], res["total"])
-    
-        return pokemon
+            pokemons.append(pokemon)
+            
+        return pokemons
+
 
 def buscar_foto_pokemon_id(entrance):
     ix=open_dir("Index")
@@ -78,7 +80,7 @@ def buscar_pokemon_stats(entrance):
             pokemon_list.append(Pokemon(res["id"], res["nombre"], res["tipos"], res["salud"], res["ataque"], res["defensa"], res["velocidad"], res["ataque_especial"], res["defensa_especial"], res["total"]))
     
         return pokemon_list
-    
+   
     
 def buscar_pokemon_tipo(entrance):
     ix=open_dir("Index")      
@@ -134,6 +136,7 @@ def buscar_por_id(entrance):
         for res in results:
             return Pokemon(res["id"], res["nombre"], res["tipos"], res["salud"], res["ataque"], res["defensa"], res["velocidad"], res["ataque_especial"], res["defensa_especial"], res["total"])
     
+    
 def crear_equipo(pokemon_favorito,stat_pk_1,tipo_pk_1,stat_pk_2,tipo_pk_2):
     '''
     pokemon_favorito = input()
@@ -142,7 +145,7 @@ def crear_equipo(pokemon_favorito,stat_pk_1,tipo_pk_1,stat_pk_2,tipo_pk_2):
     stat_pk_2 = input("Daño/Vida/Velocidad/Defensa    ")
     tipo_pk_2 = input("Acero/Agua/Bicho/Dragón/Eléctrico/Fantasma/Fuego/Hada/Hielo/Lucha/Normal/Planta/Psíquico/Roca/Siniestro/Tierra/Veneno/Volador   ")
     '''
-    pokemon_fav = buscar_pokemon_nombre(pokemon_favorito)
+    pokemon_fav = buscar_pokemon_nombre(pokemon_favorito)[0]
     pokemon_1 = buscar_stats_por_tipo(stat_pk_1, tipo_pk_1)
     pokemon_2 = buscar_stats_por_tipo(stat_pk_2, tipo_pk_2)
     

@@ -1,3 +1,4 @@
+from email.policy import default
 from django import forms
 
 class equipo_form(forms.Form):
@@ -12,3 +13,6 @@ class recomendacion(forms.Form):
     
 class busqueda_estandard(forms.Form):
     palabra = forms.CharField(label="Palabra", max_length=100)
+    
+class filtrado(forms.Form):
+    tipo_pkm = forms.CharField(label="Tipo", max_length=100)

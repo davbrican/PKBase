@@ -6,15 +6,6 @@ import os
 from urllib.request import Request, urlopen
 from principal.models import *
 
-#TIPOS COMPLEMENTARIOS
-#https://pokemon.fandom.com/es/wiki/Tipos_elementales
-
-#IMAGENES
-#https://pokemondb.net/pokedex/darkrai
-#EJEMPLO:   https://pokemondb.net/pokedex/tapu-koko
-
-#POKEMON LEGENDARIOS
-#https://pokemonalpha.xyz/pokemon-legendarios/
 
 def get_legendary_pokemon():
     link = "https://www.serebii.net/pokemon/legendary.shtml"
@@ -85,6 +76,7 @@ def leer_pagina():
         json_pokemon["foto"] = pic
         
         print(json_pokemon["id"] + " - " + json_pokemon["nombre"])
+        redireccion = "/loading/" + json_pokemon["id"]
         lista.append(json_pokemon)
         
     
