@@ -10,7 +10,9 @@
     
     <dd style="margin-top: -10px">
         <p><strong>Tipos: </strong>
-            {{pokemon.tipos}}
+            {% for tip in pokemon.tipos %}
+            <img src="{{tip}}">  
+            {% endfor %}
         </p>
     </dd>
     <dd>

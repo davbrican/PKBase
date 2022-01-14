@@ -8,6 +8,7 @@ from principal.search import *
 from principal.forms import equipo_form, recomendacion, busqueda_estandard, filtrado
 from django.http import HttpResponseRedirect
 from principal.recomendaciones import *
+from django.core.paginator import Paginator
 
 
 def activeMenu():
@@ -17,7 +18,6 @@ def activeMenu():
         "Lista": "notActive",
         "Items": "notActive",
         "Usuarios": "notActive",
-        "Cargar": "notActive",
     }
     return active
 
@@ -25,8 +25,6 @@ def activeMenu():
 def cargar(request):    
     leer_pagina()
     almacenar_datos()
-    active = activeMenu()
-    active.Cargar = "active"
     html="<html><body>Datos cargados correctamente</body></htm>"
     return HttpResponse(html)
 
@@ -50,30 +48,59 @@ def lista_pokemons(request):
             pokemons = buscar_pokemon_nombre(form.cleaned_data['palabra'])
             for i in pokemons:
                 i.id = i.id[1:]
-            return render(request,'pokemons.html', {'pokemons':pokemons, "active": active, "lista_tipos": lista_tipos})
+                
+            paginator = Paginator(pokemons, 10)
+
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+            return render(request,'pokemons.html', {'pokemons':pokemons, "active": active, "lista_tipos": lista_tipos, "page_obj": page_obj })
         else:
-            form = filtrado(request.POST)
-            if form.is_valid():
-                if form.cleaned_data['tipo_pkm'] != "todos":
-                    pokemons = buscar_pokemon_tipo(form.cleaned_data['tipo_pkm'])
-                else:
-                    pokemons = extraer_datos()[0]
-                    
-                for i in pokemons:
-                    i.id = i.id[1:]
-                return render(request,'pokemons.html', {'pokemons':pokemons, "active": active, "lista_tipos": lista_tipos})
-                    
-            
+            pokemons = extraer_datos()[0]
+                
+            for i in pokemons:
+                i.id = i.id[1:]
+            paginator = Paginator(pokemons, 10)
+
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+            return render(request,'pokemons.html', {'pokemons':pokemons, "active": active, "lista_tipos": lista_tipos, "page_obj": page_obj })
+
     else:
-        return render(request,'pokemons.html', {'pokemons':pokemons, "active": active, "lista_tipos": lista_tipos})
+        paginator = Paginator(pokemons, 10) # Show 25 contacts per page.
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        return render(request,'pokemons.html', {'pokemons': pokemons, "active": active, "lista_tipos": lista_tipos, "page_obj": page_obj })
+     
+  
+#muestra todos los pokemon filtrados por tipo
+def lista_pokemons_tipo(request, tipo):
+    active = activeMenu()
+    active["Lista"] = "active"
+    lista_tipos = "Todos/Acero/Agua/Bicho/Dragon/Electrico/Fantasma/Fuego/Hada/Hielo/Lucha/Normal/Planta/Psiquico/Roca/Siniestro/Tierra/Veneno/Volador".lower().split("/")
+    if tipo != "todos":
+        pokemons = buscar_pokemon_tipo(tipo)
+    else:
+        pokemons = extraer_datos()[0]
         
+    for i in pokemons:
+        i.id = i.id[1:]
+    paginator = Paginator(pokemons, 10) 
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request,'pokemons.html', {'pokemons': pokemons, "active": active, "lista_tipos": lista_tipos, "page_obj": page_obj })
+
+   
 #muestra detalles de un pokemon
 def detalle_pokemon(request, pokemon_id):
     pokemon = buscar_por_id("#"+pokemon_id)
+    pokemon.tipos = list(set(pokemon.tipos.split(",")))
+    print(pokemon.tipos)
     foto = buscar_foto_pokemon_id("#"+pokemon_id)
     active = activeMenu()
     active["Pokemon"] = "active"
-    return render(request,'pokemon.html',{'pokemon':pokemon, "foto": foto, "active": active})
+    return render(request,'pokemon.html',{'pokemon': pokemon, "foto": foto, "active": active})
 
 #muestra un formulario para crear un equipo pokemon muy competitivo
 def equipo(request):

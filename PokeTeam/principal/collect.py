@@ -7,6 +7,26 @@ from urllib.request import Request, urlopen
 from principal.models import *
 
 
+def get_tipos():
+    link = "https://pokemon.fandom.com/es/wiki/Tipos_elementales"
+    
+    response = urllib2.urlopen(link)
+    soup = BeautifulSoup(response, 'lxml')
+    
+    dic_tipos = {}
+    types_tables = soup.find("div", "resizable-container").find("div", ["page","has-right-rail"]).find("div", "page-content").find("div", "mw-parser-output").find("table", "galeria").find_all("tr")
+    for i in range(1,len(types_tables)-1):
+        tipo = types_tables[i].find_all("td")[0].find("a").string
+        try:
+            tipo_url = types_tables[i].find_all("td")[1].find("img")['data-src']
+        except:
+            tipo_url = types_tables[i].find_all("td")[1].find("img")['src']
+            
+        tipo = tipo.lower().replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u")
+        dic_tipos[tipo] = tipo_url
+    
+    return dic_tipos
+
 def get_legendary_pokemon():
     link = "https://www.serebii.net/pokemon/legendary.shtml"
     
@@ -25,6 +45,7 @@ def get_legendary_pokemon():
 
 
 def leer_pagina():
+    lista_imgs_tipos = get_tipos()
     lista_legendarios = get_legendary_pokemon()
     
     link = "https://www.pkparaiso.com/pokemon/lista-pokemon.php"
@@ -42,10 +63,14 @@ def leer_pagina():
 
         url = "https://pkparaiso.com" + data[1].find("span").find("a")["href"]
 
+        tipos_urls = []
+        tipos_pkm = [j.split("/")[-1].split(".")[0] for j in [i["src"] for i in data[3].find_all("img")]]
+        for j in tipos_pkm:
+            tipos_urls.append(lista_imgs_tipos[j])
         json_pokemon = {
             "id": data[2].find("a").string.split(" ")[0],
             "nombre": " ".join(data[2].find("a").string.split(" ")[1:]),
-            "tipos": [j.split("/")[-1].split(".")[0] for j in [i["src"] for i in data[3].find_all("img")]],
+            "tipos": tipos_urls,
             "salud": int(data[-7].string),
             "ataque": int(data[-6].string),
             "defensa": int(data[-5].string),
