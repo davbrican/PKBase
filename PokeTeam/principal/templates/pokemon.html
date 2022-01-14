@@ -8,65 +8,72 @@
 <div style="margin-left:25%;padding:1px 16px;height:1000px;top:80px;position:fixed">
     <img src="{{foto.url}}" width="260" height="240">
     
-    <dd style="margin-top: -10px">
-        <p><strong>Tipos: </strong>
-            {% for tip in pokemon.tipos %}
-            <img src="{{tip}}">  
-            {% endfor %}
-        </p>
+    <dd style="margin-top: 0px">
+        {% for tip in pokemon.tipos %}
+        <img src="{{tip}}">  
+        {% endfor %}
     </dd>
-    <dd>
-        <p><strong>Salud: </strong>
-            {{pokemon.salud}}
-            <meter min="1" max="255"
-             low="50" high="130"
-             optimum="200" value="{{pokemon.salud}}"></p>
-    </dd>
-    <p></p>
-    <dd style="margin-top: -5px">
-        <p><strong>Ataque: </strong>
-        {{pokemon.ataque}}
-        <meter min="1" max="255"
-         low="50" high="130"
-         optimum="200" value="{{pokemon.ataque}}">
-        </p>
-    </dd>
-    <dd style="margin-top: -5px">
-        <p><strong>Defensa: </strong>
-        {{pokemon.defensa}}
-        <meter min="1" max="255"
-         low="50" high="130"
-         optimum="200" value="{{pokemon.defensa}}">
-        </p>
-    </dd>
-    <dd style="margin-top: -5px">
-        <p><strong>Ataque Especial: </strong>
-        {{pokemon.ataque_especial}}
-        <meter min="1" max="255"
-         low="50" high="130"
-         optimum="200" value="{{pokemon.ataque_especial}}">
-        </p>
-    </dd>
-    <dd style="margin-top: -5px">
-        <p><strong>Defensa Especial: </strong>
-            {{pokemon.defensa_especial}}
-        <meter min="1" max="255"
-         low="50" high="130"
-         optimum="200" value="{{pokemon.defensa_especial}}">
-        </p>
-    </dd>
-    <dd style="margin-top: -5px">
-        <p><strong>Velocidad: </strong>
-        {{pokemon.velocidad}}
-        <meter min="1" max="255"
-         low="50" high="130"
-         optimum="200" value="{{pokemon.velocidad}}">
-        </p>
-    </dd>
-    <dd>
-    	<h3 style="margin-top: -5px;">Total</h3>
-    	<p style="margin-top: -20px;">{{pokemon.total}}</p>
-    </dd>
+    
+    <table>
+        <tr>
+            <th style="float:left;"><strong>Salud</strong></th>
+            <td>{{pokemon.salud}}</td>
+            <td>
+                <meter min="1" max="255"
+                low="50" high="130"
+                optimum="200" value="{{pokemon.salud}}">
+            </td>
+        </tr>
+        <tr>
+            <th style="float:left;"><strong>Ataque</strong></th>
+            <td>{{pokemon.ataque}}</td>
+            <td>
+                <meter min="1" max="255"
+                low="50" high="130"
+                optimum="200" value="{{pokemon.ataque}}">
+            </td>
+        </tr>
+        <tr>
+            <th style="float:left;"><strong>Defensa</strong></th>
+            <td>{{pokemon.defensa}}</td>
+            <td>
+                <meter min="1" max="255"
+                low="50" high="130"
+                optimum="200" value="{{pokemon.defensa}}">
+            </td>
+        </tr>
+        <tr>
+            <th style="float:left;"><strong>Ataque Especial</strong></th>
+            <td>{{pokemon.ataque_especial}}</td>
+            <td>
+                <meter min="1" max="255"
+                low="50" high="130"
+                optimum="200" value="{{pokemon.ataque_especial}}">
+            </td>
+        </tr>
+        <tr>
+            <th style="float:left;"><strong>Defensa Especial</strong></th>
+            <td>{{pokemon.defensa_especial}}</td>
+            <td>
+                <meter min="1" max="255"
+                low="50" high="130"
+                optimum="200" value="{{pokemon.defensa_especial}}">
+            </td>
+        </tr>
+        <tr>
+            <th style="float:left;"><strong>Velocidad</strong></th>
+            <td>{{pokemon.velocidad}}</td>
+            <td>
+                <meter min="1" max="255"
+                low="50" high="130"
+                optimum="200" value="{{pokemon.velocidad}}">
+            </td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <h3 style="margin-top: -5px; margin-left: 5px;">Total</h3>
+    <p style="margin-top: -20px; margin-left: 6px;">{{pokemon.total}}</p>
 </div>
 {% endblock %}
 

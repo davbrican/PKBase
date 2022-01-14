@@ -63,14 +63,12 @@ def leer_pagina():
 
         url = "https://pkparaiso.com" + data[1].find("span").find("a")["href"]
 
-        tipos_urls = []
         tipos_pkm = [j.split("/")[-1].split(".")[0] for j in [i["src"] for i in data[3].find_all("img")]]
-        for j in tipos_pkm:
-            tipos_urls.append(lista_imgs_tipos[j])
+        
         json_pokemon = {
             "id": data[2].find("a").string.split(" ")[0],
             "nombre": " ".join(data[2].find("a").string.split(" ")[1:]),
-            "tipos": tipos_urls,
+            "tipos": tipos_pkm,
             "salud": int(data[-7].string),
             "ataque": int(data[-6].string),
             "defensa": int(data[-5].string),
@@ -106,7 +104,7 @@ def leer_pagina():
         
     
     with open(os.path.dirname(__file__) + "/pokemons.json", "w", encoding="UTF-8") as file:
-        json.dump({"lista_pokemons": lista, "lista_legendarios": lista_legendarios}, file)
+        json.dump({"lista_pokemons": lista, "lista_legendarios": lista_legendarios, "lista_tipos_urls": lista_imgs_tipos}, file)
 
 
 
@@ -117,6 +115,7 @@ def extraer_datos():
         archivo = json.load(file)
         lista_pokemons = archivo["lista_pokemons"]
         lista_legendarios = archivo["lista_legendarios"]
+        lista_tipos_urls = archivo["lista_tipos_urls"]
         
     lista = []
     lista_photos = []
@@ -127,4 +126,4 @@ def extraer_datos():
         lista_photos.append(new_photo)
 
 
-    return [lista, lista_photos, lista_legendarios]
+    return [lista, lista_photos, lista_legendarios, lista_tipos_urls]

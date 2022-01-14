@@ -41,7 +41,7 @@ def lista_pokemons(request):
         i.id = i.id[1:]
     active = activeMenu()
     active["Lista"] = "active"
-    lista_tipos = "Todos/Acero/Agua/Bicho/Dragon/Electrico/Fantasma/Fuego/Hada/Hielo/Lucha/Normal/Planta/Psiquico/Roca/Siniestro/Tierra/Veneno/Volador".lower().split("/")
+    lista_tipos = "Elegir.../Todos/Acero/Agua/Bicho/Dragon/Electrico/Fantasma/Fuego/Hada/Hielo/Lucha/Normal/Planta/Psiquico/Roca/Siniestro/Tierra/Veneno/Volador".lower().split("/")
     if request.method == "POST":
         form = busqueda_estandard(request.POST)
         if form.is_valid():
@@ -77,8 +77,9 @@ def lista_pokemons(request):
 def lista_pokemons_tipo(request, tipo):
     active = activeMenu()
     active["Lista"] = "active"
-    lista_tipos = "Todos/Acero/Agua/Bicho/Dragon/Electrico/Fantasma/Fuego/Hada/Hielo/Lucha/Normal/Planta/Psiquico/Roca/Siniestro/Tierra/Veneno/Volador".lower().split("/")
-    if tipo != "todos":
+    lista_tipos = "Elegir.../Todos/Acero/Agua/Bicho/Dragon/Electrico/Fantasma/Fuego/Hada/Hielo/Lucha/Normal/Planta/Psiquico/Roca/Siniestro/Tierra/Veneno/Volador".lower().split("/")
+    
+    if tipo != "todos" and tipo != "elegir...":
         pokemons = buscar_pokemon_tipo(tipo)
     else:
         pokemons = extraer_datos()[0]
@@ -94,9 +95,14 @@ def lista_pokemons_tipo(request, tipo):
    
 #muestra detalles de un pokemon
 def detalle_pokemon(request, pokemon_id):
+    lista_tipos_url=extraer_datos()[3]
     pokemon = buscar_por_id("#"+pokemon_id)
+    list_types = []
     pokemon.tipos = list(set(pokemon.tipos.split(",")))
-    print(pokemon.tipos)
+    for i in pokemon.tipos:
+        print(i)
+        list_types.append(lista_tipos_url[i])
+    pokemon.tipos = list_types
     foto = buscar_foto_pokemon_id("#"+pokemon_id)
     active = activeMenu()
     active["Pokemon"] = "active"

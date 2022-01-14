@@ -1,8 +1,8 @@
 import random
 import names
 
-with open("../../data/teams.txt", "a", encoding="utf-8") as file:
-    for i in range(10000):
+with open("../data/u.teams", "a", encoding="utf-8") as file:
+    for i in range(100000):
         user_id = i
         lista = []
         for j in range(6):
@@ -16,6 +16,6 @@ with open("../../data/teams.txt", "a", encoding="utf-8") as file:
             lista.append(pokemon)
         file.write(str(user_id) + "|" + lista[0]+ "|" + lista[1]+ "|" + lista[2]+ "|" + lista[3]+ "|" + lista[4]+ "|" + lista[5] + "\n")
         
-with open("../../data/users.txt", "a", encoding="utf-8") as file:
+with open("../data/users.txt", "a", encoding="utf-8") as file:
     for i in range(10000):
         file.write(str(i) + "|" + names.get_full_name() + "\n")

@@ -23,7 +23,7 @@
 
 	<br><br>
 	<form action="/pokemons/" method="post">{% csrf_token %}
-		<label for="tipo_pkm">Tipo</label>
+		<label for="tipo_pkm">Filtrar por</label>
 		<br>
 		<select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);" id="tipo_pkm" name="tipo_pkm">
 		{% for tipo_pkm in lista_tipos %}

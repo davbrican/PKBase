@@ -15,7 +15,7 @@ def get_equipos():
 
     recomendacion = {}
 
-    for j in range(1, 802):
+    for j in range(1, 803):
         if j < 10:
             recomendacion["#00"+str(j)] = 0
         elif j < 100:
