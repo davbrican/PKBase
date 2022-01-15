@@ -9,6 +9,10 @@
 
 {% block contenido %}
 <div class="cuerpo_completo">
+<pre>
+Este es el recomendador de equipos por gusto (no confundir con el creador de equipos perfectos). En base al equipo de un usuario (deberás introducir su ID),
+te recomendaremos un equipo lo más parecido posible al de ese jugador, cambiando algunos pokemon en base a los gustos de los demás usuarios.
+</pre>
 <form action="/recomendacion_usuarios/" method="post">{% csrf_token %}
     <label for="entrada">ID de usuario (0 - 99.999)</label>
     <br>

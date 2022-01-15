@@ -72,3 +72,10 @@ a {
   .round {
     border-radius: 50%;
   }
+
+body {
+  background-image: url(pokebackground.png);
+  background-repeat: no-repeat;
+  background-position: 0 -100px;
+  overflow-y: hidden;
+}

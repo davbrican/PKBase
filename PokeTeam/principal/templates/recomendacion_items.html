@@ -8,7 +8,12 @@
 
 
 {% block contenido %}
+
 <div class="cuerpo_completo">
+<pre>
+Este es el recomendador pokemon. Dinos el nombre de un pokemon (el que más te guste), y te recomendaremos el compañero que 
+la mayoría de entrenadores usan junto al que has elegido.
+</pre>
 <form action="/recomendacion_items/" method="post">{% csrf_token %}
     <label for="entrada">Nombre del Pokemon</label>
     <br>

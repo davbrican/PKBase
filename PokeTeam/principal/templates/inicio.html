@@ -7,5 +7,24 @@
 {% endblock %}
 
   {% block contenido %}
+  {% load static %}
+  <img style="display: block; margin-left: 25%; margin-right: auto; margin-top: 80px;" src="{% static './images/pokemmologo.png' %}" alt="PokeMMO logo">
+
+  <pre style="display: block; margin-left: 25%; margin-right: auto;">
+  PokeMMO es un juego multijugador online que mezcla varios mapas de distintas generaciones de los juegos de Pokemon. En él, se puede competir contra
+  entrenadores de todo el mundo tanto en combates normales como en torneos. Hay muchos tipos de jugadores en el mundo, con distintas preferencias, y,
+  hablando de Pokemon, hay tanto dónde escoger, que alguien con menos experiencia podría perderse...
+
+  Si este es tu caso, no te preocupes, hemos preparado para tí un portal, donde en base a tus gustos y estilo de combate, te recomendaremos:
+   - Un equipo pokemon completo en base a ciertos parámetros
+   - Un pokemon que usen más entrenadores en base a otro que te gustaría usar
+   - Un equipo completo en base a los gustos de un usuario en concreto
   
+  Además, tendrás acceso a una lista con todos los pokemon existentes y podrás estudiar sus características para decidir cual te acompañará en tu viaje.</pre>
+  
+  <img style="display: inline; margin: 0 5px; margin-left: 30%; margin-top: 1%;" src="{% static './images/f1616324935.jpg' %}" alt="PokeMMO logo" width="300" height="190">
+  
+  <img style="display: inline; margin: 0 5px;" src="{% static './images/combate.jpg' %}" alt="PokeMMO logo" width="300" height="190">
+  
+  <img style="display: inline; margin: 0 5px;" src="{% static './images/poketeams.png' %}" alt="PokeMMO logo" width="300" height="190">
   {% endblock %}
