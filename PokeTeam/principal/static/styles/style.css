@@ -76,6 +76,20 @@ a {
 body {
   background-image: url(pokebackground.png);
   background-repeat: no-repeat;
-  background-position: 0 -100px;
-  overflow-y: hidden;
+  background-position: 0 0;
+  background-attachment: fixed;
+}
+
+body::-webkit-scrollbar {
+  width: 12px;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #ffdbf3;
+  border-radius: 100px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #c78e3e #8a1313;
+  border-radius: 100px;
 }
