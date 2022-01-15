@@ -5,7 +5,7 @@ from django.db.models import Max
 from principal.models import Pokemon, Poke_photo
 from principal.collect import *
 from principal.search import *
-from principal.forms import equipo_form, recomendacion, busqueda_estandard, filtrado
+from principal.forms import equipo_form, recomendacion, busqueda_estandard, filtrado, login
 from django.http import HttpResponseRedirect
 from principal.recomendaciones import *
 from django.core.paginator import Paginator
@@ -21,6 +21,23 @@ def activeMenu():
     }
     return active
 
+def administration(request):
+    logged = False
+    if request.method == 'POST':
+        form = login(request.POST)
+        if form.is_valid(): 
+            user = form.cleaned_data['user']
+            password = form.cleaned_data['password']
+            
+            if user == "admin" and password == "PokeMMO":
+                logged = True
+            
+            return render(request, 'admin.html', {"logged": logged})
+    else:
+        form = login()
+
+    return render(request, 'admin.html', {"logged": logged})
+    
 #LOAD
 def cargar(request):    
     leer_pagina()

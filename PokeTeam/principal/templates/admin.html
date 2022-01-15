@@ -1,0 +1,18 @@
+{% block contenido %}
+{% if logged %}
+<a href='/cargar'>Cargar.  <strong>AVISO: Se borrar&aacute;n todos los datos</strong></a>
+<p>Los datos pueden llegar a tardar hasta 15 minutos en cargarse en la web. Aunque lo normal son 10</p>
+{% else %}
+
+<form action="/administration/" method="post">{% csrf_token %}
+    <label for="user">user</label>
+    <br>
+    <input id="user" type="text" name="user" value="{{ user }}">
+    <br><br>
+    <label for="password">password</label> 
+    <br>
+    <input id="password" type="password" name="password" value="{{ password }}">
+    <input type="submit" value="Login">
+</form>
+{% endif %}
+{% endblock %}

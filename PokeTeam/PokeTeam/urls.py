@@ -13,4 +13,5 @@ urlpatterns = [
     path('equipo/', views.equipo),
     path('recomendacion_usuarios/', views.recomendacion_colaborativa_usuarios),
     path('recomendacion_items/', views.recomendacion_colaborativa_items),
+    path('administration/', views.administration),
 ]

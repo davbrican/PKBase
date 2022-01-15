@@ -16,3 +16,7 @@ class busqueda_estandard(forms.Form):
     
 class filtrado(forms.Form):
     tipo_pkm = forms.CharField(label="Tipo", max_length=100)
+    
+class login(forms.Form):
+    user = forms.CharField(label="user", max_length=100)
+    password = forms.CharField(label="password", max_length=100)
