@@ -167,6 +167,7 @@ def recomendacion_colaborativa_usuarios(request):
             for i in range(1, len(equipo)):
                 pokemon = buscar_por_id(equipo[i])
                 pokemon.foto_url = buscar_foto_pokemon_id(pokemon.id).url
+                pokemon.id = pokemon.id[1:]
                 equipo_2_send.append(pokemon)
             
 
